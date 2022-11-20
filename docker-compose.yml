@@ -1,0 +1,26 @@
+version: "3"
+services:
+  web:
+    build: .
+    command: rails s -b 0.0.0.0
+    volumes:
+      - .:/web
+    ports:
+      - 3000:3000
+    depends_on:
+      - database
+    networks:
+      - backend_net
+    env_file:
+      - .env
+  database:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    networks:
+      - backend_net
+    env_file:
+      - .env
+
+networks:
+  backend_net:
